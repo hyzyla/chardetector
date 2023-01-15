@@ -3,11 +3,24 @@ import Head from "next/head";
 import { useState } from "react";
 import TextareaAutosize from "react-textarea-autosize";
 import { UnicodeBlock, getUnicodeBlock } from "../utils/unicode";
+import { useRouter } from "next/router";
+import { base64UrlDecode, base64UrlEncode } from "../utils/base";
 
 const Home: NextPage = () => {
-  const [value, setValue] = useState<string>("Пpивiт!");
+  // const [value, setValue] = useState<string>("Пpивiт!");
+  const { push, query } = useRouter();
   const [higlightedBlock, setHighlightedBlock] =
     useState<UnicodeBlock | null>();
+
+  const queryValue = (query.value as string) ?? null;
+  const value: string =
+    queryValue !== null ? base64UrlDecode(queryValue) : "Привіт!";
+
+  const setValue = (value: string) => {
+    push({ query: { ...query, value: base64UrlEncode(value) } }, undefined, {
+      shallow: true,
+    });
+  };
 
   const onBlockClick = (block: UnicodeBlock) => {
     if (higlightedBlock?.name === block.name) {
