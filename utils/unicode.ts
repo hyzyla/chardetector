@@ -1,11 +1,13 @@
 // Unicode blocks
-type UnicodeBlock = {
+export type UnicodeBlock = {
     start: number;
     end: number;
     name: string;
-    wiki: string;
+    wiki: string | null;
     color: string;
 }
+
+const undefinedUnicodeBlock: UnicodeBlock = { start: -1, end: -2, name: "Undefined", wiki: null, color: "#808080"};
 const unicodeBlocks: UnicodeBlock[] = [
     { start: 0x0000, end: 0x007F, name: "Basic Latin", wiki: "https://en.wikipedia.org//wiki/Basic_Latin_(Unicode_block)", color: "#dcac15"},
     { start: 0x0080, end: 0x00FF, name: "Latin-1 Supplement", wiki: "https://en.wikipedia.org//wiki/Latin-1_Supplement", color: "#19d2a2"},
@@ -337,7 +339,7 @@ const unicodeBlocks: UnicodeBlock[] = [
 ]
 
 // Get unicdoe block for a character using binary search
-export function getUnicodeBlock(char: string): UnicodeBlock | null {
+export function getUnicodeBlock(char: string): UnicodeBlock {
     const code = getUnicodePoint(char);
     let start = 0
     let end = unicodeBlocks.length - 1
@@ -352,7 +354,7 @@ export function getUnicodeBlock(char: string): UnicodeBlock | null {
             return block
         }
     }
-    return null;
+    return undefinedUnicodeBlock;
 }
 
 // Get unicode code point for a character

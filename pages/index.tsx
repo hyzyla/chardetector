@@ -2,10 +2,36 @@ import type { NextPage } from "next";
 import Head from "next/head";
 import { useState } from "react";
 import TextareaAutosize from "react-textarea-autosize";
-import { getUnicodeBlock } from "../utils/unicode";
+import { UnicodeBlock, getUnicodeBlock } from "../utils/unicode";
 
 const Home: NextPage = () => {
   const [value, setValue] = useState<string>("Пpивiт!");
+  const [higlightedBlock, setHighlightedBlock] =
+    useState<UnicodeBlock | null>();
+
+  const onBlockClick = (block: UnicodeBlock) => {
+    if (higlightedBlock?.name === block.name) {
+      setHighlightedBlock(null);
+      return;
+    } else {
+      setHighlightedBlock(block);
+    }
+  };
+
+  const valueBlocks = value.split("").map((char, index) => {
+    const block = getUnicodeBlock(char);
+    return {
+      char,
+      block,
+    };
+  });
+
+  // Get unique blocks preserving order and skip unknown blocks
+  const uniqueBlocks: UnicodeBlock[] = valueBlocks
+    .map(({ block }) => block)
+    .filter((block, index, blocks) => blocks.indexOf(block) === index);
+
+  const opacity = 0.1;
 
   return (
     <div>
@@ -25,19 +51,42 @@ const Home: NextPage = () => {
               onChange={(e) => setValue(e.target.value)}
             />
             <div className="shadow-sm rounded p-2 w-full bg-white grid gap-[2px] grid-cols-[repeat(auto\-fill,2.5rem)]">
-              {value.split("").map((char, index) => {
-                const block = getUnicodeBlock(char);
-                const color = block?.color ?? "bg-slate-50";
+              {valueBlocks.map(({ char, block }, index) => {
+                const color = block.color;
+                const isHighlighted = higlightedBlock?.name === block.name;
+                const isActive = isHighlighted || !higlightedBlock;
                 return (
                   <div
-                    className="rounded w-10 h-10 flex items-center justify-center border-[1px] text-white cursor-default"
+                    className="rounded w-10 h-10 flex items-center justify-center border-[1px] text-white cursor-pointer select-none"
                     style={{
                       backgroundColor: color,
+                      opacity: isActive ? 1 : opacity,
                     }}
                     key={index}
-                    title={block?.name ?? "Unknown"}
+                    title={block.name}
+                    onClick={() => onBlockClick(block)}
                   >
                     {char}
+                  </div>
+                );
+              })}
+            </div>
+            <div className="shadow-sm rounded p-2 w-full bg-white grid gap-[2px]">
+              {uniqueBlocks.map((block, index) => {
+                const isHighlighted = higlightedBlock?.name === block.name;
+                const isActive = isHighlighted || !higlightedBlock;
+                return (
+                  <div key={index} className="flex items-center space-x-3">
+                    <div
+                      className="rounded h-10 w-10  border-[1px] p-3 text-white cursor-pointer select-none"
+                      style={{
+                        backgroundColor: block.color,
+                        opacity: isActive ? 1 : opacity,
+                      }}
+                      title={block.name}
+                      onClick={() => onBlockClick(block)}
+                    />
+                    <div>{block.name}</div>
                   </div>
                 );
               })}
