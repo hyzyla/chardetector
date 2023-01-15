@@ -1,6 +1,8 @@
-## Getting Started
+# CharDetective
 
-First, run the development server:
+[chardetective.hyzyla.dev](https://chardetective.hyzyla.dev)
+
+## Develop
 
 ```bash
 npm run dev
