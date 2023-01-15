@@ -26,6 +26,11 @@ const Home: NextPage = () => {
     };
   });
 
+  const onValueChange = (e: React.ChangeEvent<HTMLTextAreaElement>) => {
+    setValue(e.target.value);
+    setHighlightedBlock(null);
+  };
+
   // Get unique blocks preserving order and skip unknown blocks
   const uniqueBlocks: UnicodeBlock[] = valueBlocks
     .map(({ block }) => block)
@@ -48,7 +53,7 @@ const Home: NextPage = () => {
               className="shadow-sm rounded p-2 w-full resize-none font-mono"
               value={value}
               minRows={5}
-              onChange={(e) => setValue(e.target.value)}
+              onChange={onValueChange}
             />
             <div className="shadow-sm rounded p-2 w-full bg-white grid gap-[2px] grid-cols-[repeat(auto\-fill,2.5rem)]">
               {valueBlocks.map(({ char, block }, index) => {
