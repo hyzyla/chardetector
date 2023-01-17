@@ -1,6 +1,6 @@
-# CharDetective
+# CharDetector
 
-[chardetective.hyzyla.dev](https://chardetective.hyzyla.dev)
+[chardetector.hyzyla.dev](https://chardetector.hyzyla.dev)
 
 ![screenshot](./docs/screenshot.png)
 
