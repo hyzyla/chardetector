@@ -90,7 +90,10 @@ const Home: NextPage = () => {
           property="og:description"
           content="Paste any text and see what characters are used in it."
         />
-        <meta property="og:image" content="/og-image.png" />
+        <meta
+          property="og:image"
+          content="https://chardetector.hyzyla.dev/og-image.png"
+        />
         <meta property="og:url" content="https://chardetector.hyzyla.dev/" />
         <meta name="twitter:card" content="summary_large_image" />
       </Head>
