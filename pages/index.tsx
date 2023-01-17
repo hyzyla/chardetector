@@ -2,7 +2,11 @@ import type { NextPage } from "next";
 import Head from "next/head";
 import { useState } from "react";
 import TextareaAutosize from "react-textarea-autosize";
-import { UnicodeBlock, getUnicodeBlock } from "../utils/unicode";
+import {
+  UnicodeBlock,
+  getCharacterVisualRepresentation,
+  getUnicodeBlock,
+} from "../utils/unicode";
 import { useRouter } from "next/router";
 import { base64UrlDecode, base64UrlEncode } from "../utils/base";
 
@@ -82,16 +86,19 @@ const Home: NextPage = () => {
       <main className="bg-gray-100  min-h-screen">
         <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
           <div className="mx-auto max-w-3xl space-y-5 pt-3">
+            {/* Header */}
             <h1 className="text-3xl font-bold">Character Detector</h1>
             <p className="text-gray-500">
               Paste any text and see what characters are used in it.
             </p>
+            {/* Textarea */}
             <TextareaAutosize
               className="shadow-sm rounded p-2 w-full resize-none font-mono"
               value={value}
               minRows={5}
               onChange={onValueChange}
             />
+            {/* Reset button */}
             <div className="flex justify-end">
               <button
                 type="button"
@@ -101,11 +108,13 @@ const Home: NextPage = () => {
                 Reset
               </button>
             </div>
+            {/* Characters */}
             <div className="shadow-sm rounded p-2 min-h-[50px] w-full bg-white grid gap-[2px] grid-cols-[repeat(auto\-fill,2.5rem)]">
               {valueBlocks.map(({ char, block }, index) => {
                 const color = block.color;
                 const isHighlighted = higlightedBlock?.name === block.name;
                 const isActive = isHighlighted || !higlightedBlock;
+                const visualChar = getCharacterVisualRepresentation(char);
                 return (
                   <div
                     className="rounded w-10 h-10 flex items-center justify-center border-[1px] text-white cursor-pointer select-none"
@@ -117,11 +126,12 @@ const Home: NextPage = () => {
                     title={block.name}
                     onClick={() => onBlockClick(block)}
                   >
-                    {char}
+                    {visualChar}
                   </div>
                 );
               })}
             </div>
+            {/* Blocks */}
             <div className="shadow-sm rounded p-2 min-h-[50px] w-full bg-white grid gap-[2px]">
               {uniqueBlocks.map((block, index) => {
                 const isHighlighted = higlightedBlock?.name === block.name;
@@ -138,6 +148,17 @@ const Home: NextPage = () => {
                       onClick={() => onBlockClick(block)}
                     />
                     <div>{block.name}</div>
+                    <div className="h-1 w-1 rounded-full bg-gray-300"></div>
+                    {block.wiki && (
+                      <a
+                        className="flex items-center space-x-1 text-blue-500"
+                        href={block.wiki}
+                        target="_blank"
+                        rel="noopener noreferrer"
+                      >
+                        wiki
+                      </a>
+                    )}
                   </div>
                 );
               })}

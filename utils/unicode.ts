@@ -362,11 +362,27 @@ export function getUnicodePoint(char: string): number {
     return char.charCodeAt(0)
 }
 
-const hashCode = (str: string) => {
-    let hash = 0
-    for (let i = 0; i < str.length; i++) {
-        hash = str.charCodeAt(i) + ((hash << 5) - hash)
+// Get unicode visual representation for a character
+export function getCharacterVisualRepresentation(char: string): string {
+    // Switch that convert character to visual representation
+    switch (char) {
+        case '\n':
+            return '\\n'
+        case '\t':
+            return '\\t'
+        case '\r':
+            return '\\r'
+        case '\b':
+            return '\\b'
+        case '\f':
+            return '\\f'
+        case '\v':
+            return '\\v'
+        case '\0':
+            return '\\0'
+        case ' ':
+            return '␣'
+        default:
+            return char
     }
-    return hash
 }
-
