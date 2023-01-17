@@ -9,7 +9,7 @@ export type UnicodeBlock = {
 
 const undefinedUnicodeBlock: UnicodeBlock = { start: -1, end: -2, name: "Undefined", wiki: null, color: "#808080"};
 const unicodeBlocks: UnicodeBlock[] = [
-    { start: 0x0000, end: 0x007F, name: "Basic Latin", wiki: "https://en.wikipedia.org//wiki/Basic_Latin_(Unicode_block)", color: "#dcac15"},
+    { start: 0x0000, end: 0x007F, name: "Basic Latin", wiki: "https://en.wikipedia.org//wiki/Basic_Latin_(Unicode_block)", color: "#22c55e"},
     { start: 0x0080, end: 0x00FF, name: "Latin-1 Supplement", wiki: "https://en.wikipedia.org//wiki/Latin-1_Supplement", color: "#19d2a2"},
     { start: 0x0100, end: 0x017F, name: "Latin Extended-A", wiki: "https://en.wikipedia.org//wiki/Latin_Extended-A", color: "#e8912b"},
     { start: 0x0180, end: 0x024F, name: "Latin Extended-B", wiki: "https://en.wikipedia.org//wiki/Latin_Extended-B", color: "#05dba5"},
@@ -17,7 +17,7 @@ const unicodeBlocks: UnicodeBlock[] = [
     { start: 0x02B0, end: 0x02FF, name: "Spacing Modifier Letters", wiki: "https://en.wikipedia.org//wiki/Spacing_Modifier_Letters", color: "#9c4515"},
     { start: 0x0300, end: 0x036F, name: "Combining Diacritical Marks", wiki: "https://en.wikipedia.org//wiki/Combining_Diacritical_Marks", color: "#810aa7"},
     { start: 0x0370, end: 0x03FF, name: "Greek and Coptic", wiki: "https://en.wikipedia.org//wiki/Greek_and_Coptic", color: "#342300"},
-    { start: 0x0400, end: 0x04FF, name: "Cyrillic", wiki: "https://en.wikipedia.org//wiki/Cyrillic_(Unicode_block)", color: "#b76422"},
+    { start: 0x0400, end: 0x04FF, name: "Cyrillic", wiki: "https://en.wikipedia.org//wiki/Cyrillic_(Unicode_block)", color: "#0ea5e9"},
     { start: 0x0500, end: 0x052F, name: "Cyrillic Supplement", wiki: "https://en.wikipedia.org//wiki/Cyrillic_Supplement", color: "#52a93a"},
     { start: 0x0530, end: 0x058F, name: "Armenian", wiki: "https://en.wikipedia.org//wiki/Armenian_(Unicode_block)", color: "#05df12"},
     { start: 0x0590, end: 0x05FF, name: "Hebrew", wiki: "https://en.wikipedia.org//wiki/Hebrew_(Unicode_block)", color: "#7da998"},
