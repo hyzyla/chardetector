@@ -18,7 +18,9 @@ const Home: NextPage = () => {
   // Get query value or use default
   const queryValue = (query.value as string) ?? null;
   const value: string =
-    queryValue !== null ? base64UrlDecode(queryValue) : "Привіт!";
+    queryValue !== null
+      ? base64UrlDecode(queryValue)
+      : "Hellо! İt's a text with some hіdden ǧems. Trγ to find аll οf them";
 
   /**
    * Update query value

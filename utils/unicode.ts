@@ -381,7 +381,7 @@ export function getCharacterVisualRepresentation(char: string): string {
         case '\0':
             return '\\0'
         case ' ':
-            return '␣'
+            return '⎵'
         default:
             return char
     }
