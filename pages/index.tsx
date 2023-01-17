@@ -178,6 +178,15 @@ const Home: NextPage = () => {
                 >
                   Yevhenii Hyzyla
                 </a>
+                <span className="px-2 text-sm text-gray-300">|</span>
+                <a
+                  href="https://github.com/hyzyla/chardetector"
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="text-blue-500"
+                >
+                  Github
+                </a>
               </div>
             </div>
           </div>
