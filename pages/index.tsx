@@ -7,7 +7,6 @@ import { useRouter } from "next/router";
 import { base64UrlDecode, base64UrlEncode } from "../utils/base";
 
 const Home: NextPage = () => {
-  // const [value, setValue] = useState<string>("Пpивiт!");
   const { push, query } = useRouter();
   const [higlightedBlock, setHighlightedBlock] =
     useState<UnicodeBlock | null>();
@@ -44,6 +43,13 @@ const Home: NextPage = () => {
     setHighlightedBlock(null);
   };
 
+  const onResetButtonClick = () => {
+    const { value, ...resetedQuery } = query;
+    push({ query: { ...resetedQuery } }, undefined, {
+      shallow: true,
+    });
+  };
+
   // Get unique blocks preserving order and skip unknown blocks
   const uniqueBlocks: UnicodeBlock[] = valueBlocks
     .map(({ block }) => block)
@@ -68,7 +74,16 @@ const Home: NextPage = () => {
               minRows={5}
               onChange={onValueChange}
             />
-            <div className="shadow-sm rounded p-2 w-full bg-white grid gap-[2px] grid-cols-[repeat(auto\-fill,2.5rem)]">
+            <div className="flex justify-end">
+              <button
+                type="button"
+                className="inline-flex items-center rounded-md border border-gray-300 bg-white px-3 py-2 text-sm font-medium leading-4 text-gray-700 shadow-sm hover:bg-gray-50 focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:ring-offset-2"
+                onClick={onResetButtonClick}
+              >
+                Reset
+              </button>
+            </div>
+            <div className="shadow-sm rounded p-2 min-h-[50px] w-full bg-white grid gap-[2px] grid-cols-[repeat(auto\-fill,2.5rem)]">
               {valueBlocks.map(({ char, block }, index) => {
                 const color = block.color;
                 const isHighlighted = higlightedBlock?.name === block.name;
@@ -89,7 +104,7 @@ const Home: NextPage = () => {
                 );
               })}
             </div>
-            <div className="shadow-sm rounded p-2 w-full bg-white grid gap-[2px]">
+            <div className="shadow-sm rounded p-2 min-h-[50px] w-full bg-white grid gap-[2px]">
               {uniqueBlocks.map((block, index) => {
                 const isHighlighted = higlightedBlock?.name === block.name;
                 const isActive = isHighlighted || !higlightedBlock;
