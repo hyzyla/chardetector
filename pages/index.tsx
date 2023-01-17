@@ -11,16 +11,23 @@ const Home: NextPage = () => {
   const [higlightedBlock, setHighlightedBlock] =
     useState<UnicodeBlock | null>();
 
+  // Get query value or use default
   const queryValue = (query.value as string) ?? null;
   const value: string =
     queryValue !== null ? base64UrlDecode(queryValue) : "Привіт!";
 
+  /**
+   * Update query value
+   **/
   const setValue = (value: string) => {
     push({ query: { ...query, value: base64UrlEncode(value) } }, undefined, {
       shallow: true,
     });
   };
 
+  /**
+   * Handle block click
+   **/
   const onBlockClick = (block: UnicodeBlock) => {
     if (higlightedBlock?.name === block.name) {
       setHighlightedBlock(null);
@@ -38,11 +45,18 @@ const Home: NextPage = () => {
     };
   });
 
+  /**
+   * Update value on textarea change
+   **/
   const onValueChange = (e: React.ChangeEvent<HTMLTextAreaElement>) => {
     setValue(e.target.value);
     setHighlightedBlock(null);
   };
 
+  /**
+   * Reset value to default
+   *
+   **/
   const onResetButtonClick = () => {
     const { value, ...resetedQuery } = query;
     push({ query: { ...resetedQuery } }, undefined, {
@@ -50,7 +64,7 @@ const Home: NextPage = () => {
     });
   };
 
-  // Get unique blocks preserving order and skip unknown blocks
+  // Get unique blocks
   const uniqueBlocks: UnicodeBlock[] = valueBlocks
     .map(({ block }) => block)
     .filter((block, index, blocks) => blocks.indexOf(block) === index);
@@ -68,6 +82,10 @@ const Home: NextPage = () => {
       <main className="bg-gray-100  min-h-screen">
         <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
           <div className="mx-auto max-w-3xl space-y-5 pt-3">
+            <h1 className="text-3xl font-bold">Character Detector</h1>
+            <p className="text-gray-500">
+              Paste any text and see what characters are used in it.
+            </p>
             <TextareaAutosize
               className="shadow-sm rounded p-2 w-full resize-none font-mono"
               value={value}
@@ -123,6 +141,20 @@ const Home: NextPage = () => {
                   </div>
                 );
               })}
+            </div>
+            {/* Footer */}
+            <div className="text-gray-500 text-sm">
+              <div>
+                Made in 🇺🇦 by{" "}
+                <a
+                  href="https://hyzyla.dev/"
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="text-blue-500"
+                >
+                  Yevhenii Hyzyla
+                </a>
+              </div>
             </div>
           </div>
         </div>
